@@ -5,9 +5,7 @@ import numpy as np
 import matplotlib
 import matplotlib.cm as cm
 import imageio
-from IPython.display import HTML
 import cmath
-from scipy import signal
 import os
 
 
@@ -27,13 +25,7 @@ class Game:
         self.save_maps = save_maps
         self.files_count = 0
 
-        if init_map:
-            self.map = init_map
-            self.dimensions = init_map.shape[0]
-        else:
-            self.map = (
-                    np.random.random([self.size for i in range(self.dimensions)]) < self.agents_percent
-            ).astype(int)
+        self.init_map(init_map)
 
         self.shape = tuple([self.size for i in range(self.dimensions)])
         self.file_location = './data/'
@@ -50,7 +42,7 @@ class Game:
             for i in range(self.files_count):
                 image_path = self.file_location + self.file_name + 'i_' + str(i) + '.jpg'
                 writer.append_data(imageio.imread(image_path))
-                os.remove(os.path.join(image_path))
+                # os.remove(os.path.join(image_path))
 
         return gif_name
 
@@ -119,9 +111,18 @@ class Game:
 
     def remove_padding(self, mp):
         if self.dimensions == 2:
-            return padding[1:-1, 1:-1]
+            return mp[1:-1, 1:-1]
         if self.dimensions == 3:
-            return padding[1:-1, 1:-1, 1:-1]
+            return mp[1:-1, 1:-1, 1:-1]
+
+    def init_map(self, init_map):
+        if init_map:
+            self.map = init_map
+            self.dimensions = init_map.shape[0]
+        else:
+            self.map = (
+                    np.random.random([self.size for i in range(self.dimensions)]) < self.agents_percent
+            ).astype(int)
 
     def sum_matrix(self, matrix):
         return sum(np.ravel(matrix))
