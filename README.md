@@ -40,6 +40,12 @@ To run parallel scripts mpi4py is required:
 To run parallel scripts enter in command line: `mpirun -n [processes_number] python [filename]`
 
 
+
+Another way to visualise is to save map in .vtk format and use [ParaView](https://www.paraview.org/):
+
+![Paraview](https://github.com/NesterukSergey/Conways_Game_of_Life/blob/master/data/paraview.gif)
+
+
 ## Sample 2D maps:
 
 
